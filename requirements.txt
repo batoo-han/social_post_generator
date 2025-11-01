@@ -40,5 +40,4 @@ cryptography==41.0.7
 # Monitoring (опционально)
 psutil==5.9.6
 
-requests
 
