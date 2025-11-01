@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+  # ============================================
+  # Основное приложение
+  # ============================================
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: social_post_generator
+    
+    # Перезапуск при падении
+    restart: unless-stopped
+    
+    # Порты
+    ports:
+      - "8082:8082"
+    
+    # Переменные окружения из .env файла
+    env_file:
+      - .env
+    
+    # Volumes для персистентности данных
+    volumes:
+      # Логи (чтобы сохранялись между перезапусками)
+      - ./logs:/app/logs
+      # Для разработки: монтируем код (закомментировано для продакшна)
+      # - .:/app
+    
+    # Ограничения ресурсов
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8082/api/health', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    
+    # Логирование
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    
+    # Сеть
+    networks:
+      - app_network
+
+# ============================================
+# Сети
+# ============================================
+networks:
+  app_network:
+    driver: bridge
+
+# ============================================
+# Volumes (если нужны именованные)
+# ============================================
+volumes:
+  logs:
+    driver: local
+

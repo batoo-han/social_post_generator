@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Генератор постов для социальных сетей с использованием искусственного интеллекта">
+    <meta name="keywords" content="социальные сети, генератор постов, AI, искусственный интеллект">
+    <title>🎯 Social Post Generator - AI генератор постов</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎯</text></svg>">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="background-animation">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header -->
+        <header class="header fade-in">
+            <div class="logo">
+                <h1 class="logo-text">Генератор постов</h1>
+            </div>
+            <p class="subtitle">Создавай вирусные посты с помощью искусственного интеллекта</p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Generator Form -->
+            <section class="generator-section fade-in" style="animation-delay: 0.1s;">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">✨ Генератор постов</h2>
+                        <p class="card-description">
+                            Вставь ссылку на интересную статью, и AI создаст для тебя 
+                            захватывающий пост в выбранном стиле
+                        </p>
+                    </div>
+
+                    <form id="generatorForm" class="generator-form">
+                        <!-- URL Input -->
+                        <div class="form-group">
+                            <label for="urlInput" class="form-label">
+                                <span class="label-icon">🔗</span>
+                                URL статьи
+                            </label>
+                            <div class="input-wrapper">
+                                <input 
+                                    type="url" 
+                                    id="urlInput" 
+                                    class="form-input" 
+                                    placeholder="https://example.com/article"
+                                    required
+                                    autocomplete="url"
+                                >
+                                <span class="input-icon">🌐</span>
+                            </div>
+                            <p class="form-hint">
+                                Вставь ссылку на статью, блог-пост или новость
+                            </p>
+                        </div>
+
+                        <!-- Style Selector -->
+                        <div class="form-group">
+                            <label for="styleSelect" class="form-label">
+                                <span class="label-icon">🎨</span>
+                                Стиль поста
+                            </label>
+                            <div class="style-grid" id="styleGrid">
+                                <!-- Будут добавлены динамически через JS -->
+                                <div class="loading-placeholder">Загрузка стилей...</div>
+                            </div>
+                        </div>
+
+                        <!-- Post Length Control -->
+                        <div class="form-group">
+                            <label for="postLength" class="form-label">
+                                <span class="label-icon">📏</span>
+                                Максимальная длина поста
+                            </label>
+                            <div class="length-control">
+                                <input 
+                                    type="range" 
+                                    id="lengthSlider" 
+                                    class="length-slider" 
+                                    min="400" 
+                                    max="4000" 
+                                    value="800"
+                                    step="100"
+                                >
+                                <input 
+                                    type="number" 
+                                    id="lengthInput" 
+                                    class="length-input" 
+                                    min="400" 
+                                    max="4000" 
+                                    value="800"
+                                    step="100"
+                                >
+                                <span class="length-label">символов</span>
+                            </div>
+                            <p class="form-hint">
+                                От 400 до 4000 символов. Рекомендуется 800-1500 для большинства соцсетей
+                            </p>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary" id="generateBtn">
+                            <span class="btn-text">Сгенерировать пост</span>
+                            <span class="btn-icon">✨</span>
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Result Section -->
+            <section class="result-section fade-in" style="animation-delay: 0.2s;" id="resultSection">
+                <div class="card result-card hidden" id="resultCard">
+                    <div class="card-header">
+                        <h2 class="card-title">📝 Твой пост готов!</h2>
+                        <div class="result-meta" id="resultMeta">
+                            <span class="meta-item">
+                                <span class="meta-icon">🎨</span>
+                                <span id="resultStyle">Ироничный</span>
+                            </span>
+                            <span class="meta-item">
+                                <span class="meta-icon">📊</span>
+                                <span id="resultLength">0</span> символов
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="result-content">
+                        <div class="post-preview" id="postPreview">
+                            <!-- Сюда будет вставлен результат -->
+                        </div>
+
+                        <div class="result-actions">
+                            <button class="btn btn-secondary" id="copyBtn">
+                                <span class="btn-icon">📋</span>
+                                <span class="btn-text">Скопировать</span>
+                            </button>
+                            <button class="btn btn-ghost" id="newPostBtn">
+                                <span class="btn-icon">🔄</span>
+                                <span class="btn-text">Создать новый</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section class="features-section fade-in" style="animation-delay: 0.3s;">
+                <h2 class="features-title">🚀 Преимущества</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3 class="feature-title">Быстрая генерация</h3>
+                        <p class="feature-description">
+                            Создание поста занимает всего 5-10 секунд
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎭</div>
+                        <h3 class="feature-title">6 уникальных стилей</h3>
+                        <p class="feature-description">
+                            От ироничного до профессионального
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🤖</div>
+                        <h3 class="feature-title">Умный AI</h3>
+                        <p class="feature-description">
+                            Использует передовые модели GPT
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📱</div>
+                        <h3 class="feature-title">Адаптивный дизайн</h3>
+                        <p class="feature-description">
+                            Работает на всех устройствах
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer fade-in" style="animation-delay: 0.4s;">
+            <p class="footer-text">
+                Сделано с ❤️ используя AI
+            </p>
+            <div class="footer-links">
+                <a href="/docs" class="footer-link" target="_blank">API документация</a>
+                <span class="footer-separator">•</span>
+                <a href="/api/health" class="footer-link" target="_blank">Статус сервиса</a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay hidden" id="loadingOverlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p class="loading-text">Генерируем пост...</p>
+            <p class="loading-subtext">Это может занять несколько секунд</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/static/app.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,36 @@
+# GitHub Actions для автоматической сборки Docker образа
+
+name: Docker Build and Test
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    
+    - name: Build Docker image
+      run: |
+        docker build -t social-post-generator:test .
+    
+    - name: Test Docker image
+      run: |
+        # Создаем тестовый .env файл
+        cp .env.example .env
+        echo "OPENAI_API_KEY=test_key_for_build" >> .env
+        
+        # Проверяем что образ собран
+        docker images | grep social-post-generator
+        
+        echo "✅ Docker образ успешно собран"
+

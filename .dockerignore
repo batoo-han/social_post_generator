@@ -1,0 +1,71 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Virtual Environment
+.venv/
+venv/
+ENV/
+env/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment
+.env
+.env.local
+.env.production
+
+# Logs
+logs/
+*.log
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Documentation
+docs/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Project specific
+*.db
+*.sqlite
+*.sqlite3
+tmp/
+temp/
+
+# README and docs (можно включить если нужно в образе)
+README.md
+LICENSE
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+

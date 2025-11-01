@@ -1,0 +1,41 @@
+# Автоматическое определение EOL
+* text=auto
+
+# Python файлы
+*.py text eol=lf
+
+# Shell скрипты
+*.sh text eol=lf
+
+# Batch скрипты
+*.bat text eol=crlf
+
+# Markdown
+*.md text
+
+# YAML
+*.yml text
+*.yaml text
+
+# JSON
+*.json text
+
+# HTML/CSS/JS
+*.html text
+*.css text
+*.js text
+
+# Конфигурация
+.env.example text
+.gitignore text
+.dockerignore text
+Dockerfile text
+
+# Бинарные файлы
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+

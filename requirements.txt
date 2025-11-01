@@ -1,0 +1,45 @@
+# Веб-фреймворк
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+python-multipart==0.0.6
+
+# OpenAI
+openai==1.3.5
+
+# Парсинг веб-страниц
+requests==2.31.0
+beautifulsoup4==4.12.2
+lxml==4.9.3
+html5lib==1.1
+
+# Конфигурация
+python-dotenv==1.0.0
+pydantic==2.5.0
+pydantic-settings==2.1.0
+
+# Логирование
+python-json-logger==2.0.7
+
+# Utilities
+aiofiles==23.2.1
+httpx==0.25.1
+
+# Rate limiting
+# slowapi==0.1.9  # Временно отключено из-за проблем с кодировкой .env на Windows
+
+# CORS
+# (включено в FastAPI)
+
+# Валидация и типизация
+email-validator==2.1.0
+validators==0.22.0
+
+# Дата и время
+python-dateutil==2.8.2
+
+# Security
+cryptography==41.0.7
+
+# Monitoring (опционально)
+psutil==5.9.6
+
