@@ -20,12 +20,12 @@ ENV PYTHONUNBUFFERED=1 \
 WORKDIR /app
 
 # Устанавливаем системные зависимости
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    gcc \
-    g++ \
-    libxml2-dev \
-    libxslt-dev \
-    && rm -rf /var/lib/apt/lists/*
+#RUN apt-get update && apt-get install -y --no-install-recommends \
+#    gcc \
+#    g++ \
+#    libxml2-dev \
+#    libxslt-dev \
+#    && rm -rf /var/lib/apt/lists/*
 
 # ============================================
 # Стадия 2: Установка Python зависимостей
@@ -49,10 +49,10 @@ ENV PYTHONUNBUFFERED=1 \
     PORT=8082
 
 # Устанавливаем минимальные системные зависимости
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    libxml2 \
-    libxslt1.1 \
-    && rm -rf /var/lib/apt/lists/*
+#RUN apt-get update && apt-get install -y --no-install-recommends \
+#    libxml2 \
+#    libxslt1.1 \
+#    && rm -rf /var/lib/apt/lists/*
 
 # Создаем непривилегированного пользователя
 RUN useradd -m -u 1000 appuser && \
