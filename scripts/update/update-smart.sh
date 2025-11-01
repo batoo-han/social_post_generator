@@ -55,15 +55,15 @@ create_backup() {
 check_health() {
     step "Проверка работоспособности..."
     
-    # Ждем запуска
-    sleep 10
+    # Ждем запуска (увеличено из-за первого запуска может быть медленнее)
+    sleep 15
     
-    for i in {1..6}; do
+    for i in {1..10}; do
         if curl -sf http://localhost:8082/api/health >/dev/null 2>&1; then
             success "Приложение работает!"
             return 0
         fi
-        warning "Попытка $i/6..."
+        warning "Попытка $i/10..."
         sleep 5
     done
     

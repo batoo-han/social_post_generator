@@ -9,6 +9,7 @@
 
 ```bash
 # Linux/Mac
+sudo chmod a+x run.sh # выдайм права на исполнение скрипта
 ./run.sh
 
 # Windows
@@ -29,6 +30,7 @@ run.bat
 
 ```bash
 # Linux/Mac
+sudo chmod a+x update.sh # выдайм права на исполнение скрипта
 ./update.sh
 
 # Windows
@@ -54,6 +56,7 @@ update.bat
 **Продвинутая версия с откатом**
 
 ```bash
+sudo chmod a+x update-smart.sh # выдайм права на исполнение скрипта
 ./update-smart.sh
 ```
 
@@ -76,6 +79,7 @@ update.bat
 
 ```bash
 # Linux/Mac
+sudo chmod a+x docker-rebuild.sh # выдайм права на исполнение скрипта
 ./docker-rebuild.sh
 
 # Windows
