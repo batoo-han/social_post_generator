@@ -322,10 +322,11 @@ class OpenAIClient:
         try:
             logger.debug("🏥 Проверка здоровья ProxyAPI...")
             
-            # Простой тестовый запрос через стандартный API
+            # Простой тестовый запрос через стандартный API с коротким таймаутом
             response = self.client.chat.completions.create(
                 model=self.model,
                 messages=[{"role": "user", "content": "test"}],
+                timeout=10.0,  # 10 секунд таймаут для healthcheck
             )
             
             logger.info("✅ ProxyAPI доступен")
