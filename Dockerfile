@@ -8,7 +8,7 @@ FROM python:3.10-slim as base
 # Метаданные образа
 LABEL maintainer="Social Post Generator"
 LABEL description="AI-powered social media post generator"
-LABEL version="1.0.0"
+LABEL version="1.1.0"
 
 # Устанавливаем переменные окружения
 ENV PYTHONUNBUFFERED=1 \

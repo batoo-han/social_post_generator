@@ -47,7 +47,7 @@ scripts\start\run.bat       # Windows
 
 ```bash
 # 1. Клонируйте и настройте
-git clone https://github.com/YOUR_REPO/social_post_generator.git
+git clone https://github.com/batoo-han/social_post_generator.git
 cd social_post_generator
 cp .env.example .env
 nano .env  # Укажите OPENAI_API_KEY
@@ -187,7 +187,7 @@ PORT=8082
 Мы приветствуем вклад в проект!
 
 - 📖 [docs/developer/CONTRIBUTING.md](docs/developer/CONTRIBUTING.md) - Руководство
-- 🐛 [Создайте Issue](https://github.com/your-repo/issues) - Баг или идея
+- 🐛 [Создайте Issue](https://github.com/batoo-han/issues) - Баг или идея
 - 🔧 Pull Request - С улучшениями
 
 ---
