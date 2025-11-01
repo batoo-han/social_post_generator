@@ -31,8 +31,8 @@ httpx==0.25.1
 # (включено в FastAPI)
 
 # Валидация и типизация
-email-validator==2.1.0
-validators==0.22.0
+email-validator
+validators
 
 # Дата и время
 python-dateutil==2.8.2
