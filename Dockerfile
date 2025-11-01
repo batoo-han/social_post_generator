@@ -54,10 +54,11 @@ ENV PYTHONUNBUFFERED=1 \
 #    libxslt1.1 \
 #    && rm -rf /var/lib/apt/lists/*
 
-# Создаем непривилегированного пользователя
+# Создаем непривилегированного пользователя и необходимые директории
 RUN useradd -m -u 1000 appuser && \
     mkdir -p /app /app/logs /app/static && \
-    chown -R appuser:appuser /app
+    chown -R appuser:appuser /app && \
+    chmod -R 755 /app
 
 # Устанавливаем рабочую директорию
 WORKDIR /app
@@ -69,11 +70,13 @@ COPY --from=dependencies /usr/local/bin /usr/local/bin
 # Копируем файлы приложения
 COPY --chown=appuser:appuser . .
 
+# Создаем директорию для логов с правильными правами ДО переключения пользователя
+RUN mkdir -p logs && \
+    chown -R appuser:appuser logs && \
+    chmod -R 755 logs
+
 # Переключаемся на непривилегированного пользователя
 USER appuser
-
-# Создаем директорию для логов
-RUN mkdir -p logs
 
 # Healthcheck
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
