@@ -27,9 +27,6 @@ httpx==0.25.1
 # Rate limiting
 # slowapi==0.1.9  # Временно отключено из-за проблем с кодировкой .env на Windows
 
-# CORS
-# (включено в FastAPI)
-
 # Валидация и типизация
 email-validator
 validators
