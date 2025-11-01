@@ -16,7 +16,7 @@
 ### 2️⃣ Клонируйте репозиторий
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/batoo-han/social_post_generator.git
 cd social_post_generator
 ```
 
