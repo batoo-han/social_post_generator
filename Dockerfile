@@ -70,13 +70,11 @@ COPY --from=dependencies /usr/local/bin /usr/local/bin
 # Копируем файлы приложения
 COPY --chown=appuser:appuser . .
 
-# Создаем директорию для логов с правильными правами ДО переключения пользователя
-RUN mkdir -p logs && \
-    chown -R appuser:appuser logs && \
-    chmod -R 755 logs
-
 # Переключаемся на непривилегированного пользователя
 USER appuser
+
+# Создаем директорию для логов от имени appuser
+RUN mkdir -p /app/logs && chmod 755 /app/logs
 
 # Healthcheck
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
