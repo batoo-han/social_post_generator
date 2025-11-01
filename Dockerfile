@@ -8,7 +8,7 @@ FROM python:3.10-slim as base
 # Метаданные образа
 LABEL maintainer="Social Post Generator"
 LABEL description="AI-powered social media post generator"
-LABEL version="1.0.0"
+LABEL version="1.1.0"
 
 # Устанавливаем переменные окружения
 ENV PYTHONUNBUFFERED=1 \
@@ -78,11 +78,11 @@ RUN mkdir -p /app/logs && chmod 755 /app/logs
 
 # Healthcheck
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-    CMD python -c "import requests; requests.get('http://localhost:8082/api/health', timeout=5)" || exit 1
+    CMD python -c "import sys; sys.path.insert(0, '/app/src'); import requests; requests.get('http://localhost:8082/api/health', timeout=5)" || exit 1
 
 # Экспонируем порт
 EXPOSE 8082
 
 # Запускаем приложение
-CMD ["python", "-u", "app.py"]
+CMD ["python", "-u", "src/app.py"]
 

@@ -19,6 +19,12 @@ import uvicorn
 from collections import defaultdict
 from datetime import datetime, timedelta
 
+import sys
+from pathlib import Path
+
+# Добавляем src в PYTHONPATH
+sys.path.insert(0, str(Path(__file__).parent))
+
 from config import settings
 from logger import get_logger, LogContext
 from agent import get_agent, SocialPostAgent
@@ -252,7 +258,8 @@ class StylesResponse(BaseModel):
 async def index():
     """Главная страница с веб-интерфейсом."""
     try:
-        with open("static/index.html", "r", encoding="utf-8") as f:
+        index_path = Path(__file__).parent / "static" / "index.html"
+        with open(index_path, "r", encoding="utf-8") as f:
             return f.read()
     except FileNotFoundError:
         return """
@@ -421,9 +428,11 @@ async def health_check():
 
 # Монтируем статические файлы
 try:
-    app.mount("/static", StaticFiles(directory="static"), name="static")
-except RuntimeError:
-    logger.warning("⚠️ Директория static не найдена, статика не смонтирована")
+    static_dir = Path(__file__).parent / "static"
+    app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
+    logger.info(f"✅ Статика смонтирована из {static_dir}")
+except RuntimeError as e:
+    logger.warning(f"⚠️ Директория static не найдена: {e}")
 
 
 # Обработчик 404

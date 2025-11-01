@@ -48,7 +48,7 @@ echo.
 echo Для остановки нажмите Ctrl+C
 echo.
 
-python app.py
+python src\app.py
 
 pause
 
