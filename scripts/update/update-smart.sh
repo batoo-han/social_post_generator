@@ -55,8 +55,9 @@ create_backup() {
 check_health() {
     step "Проверка работоспособности..."
     
-    # Ждем запуска (увеличено из-за первого запуска может быть медленнее)
-    sleep 15
+    # Ждем запуска (приложение может загружаться до 60 секунд)
+    info "Ожидание запуска приложения (60 сек)..."
+    sleep 30
     
     for i in {1..10}; do
         if curl -sf http://localhost:8082/api/health >/dev/null 2>&1; then
@@ -64,7 +65,7 @@ check_health() {
             return 0
         fi
         warning "Попытка $i/10..."
-        sleep 5
+        sleep 7
     done
     
     error "Приложение не отвечает!"
