@@ -98,3 +98,14 @@ yarn.lock
 *.tar.gz
 *.zip
 
+# Files
+SUMMARY.md
+README_GITHUB.md
+PROJECT_CHECKLIST.md
+GITHUB_CHECKLIST.md
+CHANGELOG.md
+docs/ARCHITECTURE.md
+docs/DEPLOYMENT.md
+docs/IMPLEMENTATION_PLAN.md
+docs/README.md
+docs/FEATURES.md
