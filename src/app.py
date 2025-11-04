@@ -41,6 +41,9 @@ from exceptions import (
 
 logger = get_logger(__name__)
 
+# Глобальная переменная для хранения результата проверки ProxyAPI при старте
+_proxyapi_startup_status: Optional[bool] = None
+
 # Простой rate limiter без зависимостей (избегаем проблем с кодировкой .env в slowapi)
 class SimpleRateLimiter:
     """Простой rate limiter на основе IP адресов."""
@@ -84,17 +87,20 @@ async def lifespan(app: FastAPI):
     logger.info(f"📊 Уровень логирования: {settings.log_level}")
     
     # Инициализируем агента и OpenAI клиента
+    global _proxyapi_startup_status
     try:
         agent = get_agent()
         logger.info("✅ Агент инициализирован")
         
-        # Проверяем доступность OpenAI
-        if agent.openai_client.check_health():
+        # Проверяем доступность OpenAI один раз при старте (сохраняем результат)
+        _proxyapi_startup_status = agent.openai_client.check_health()
+        if _proxyapi_startup_status:
             logger.info("✅ OpenAI API доступен")
         else:
             logger.warning("⚠️ OpenAI API недоступен")
     except Exception as e:
         logger.error(f"❌ Ошибка инициализации: {e}")
+        _proxyapi_startup_status = False
     
     yield
     
@@ -376,22 +382,35 @@ async def health_check():
     Проверка здоровья сервиса.
     
     Проверяет работоспособность приложения и его зависимостей.
+    Не проверяет ProxyAPI (используется сохраненный статус при старте).
     """
     checks = {}
     overall_status = "healthy"
     
-    # Проверка OpenAI
+    # Проверка OpenAI (используем сохраненный статус при старте, без новых запросов к ProxyAPI)
     try:
-        agent = get_agent()
-        openai_available = agent.openai_client.check_health()
-        checks["openai"] = {
-            "status": "available" if openai_available else "unavailable"
-        }
-        if not openai_available:
+        # Используем глобальную переменную с результатом проверки при старте
+        openai_available = _proxyapi_startup_status if _proxyapi_startup_status is not None else None
+        if openai_available is True:
+            checks["openai"] = {
+                "status": "available",
+                "note": "checked at startup"
+            }
+        elif openai_available is False:
+            checks["openai"] = {
+                "status": "unavailable",
+                "note": "checked at startup"
+            }
             overall_status = "degraded"
+        else:
+            # Если статус еще не определен (не должно быть, но на всякий случай)
+            checks["openai"] = {
+                "status": "unknown",
+                "note": "not checked yet"
+            }
     except Exception as e:
         checks["openai"] = {
-            "status": "unavailable",
+            "status": "unknown",
             "error": str(e)
         }
         overall_status = "degraded"
