@@ -76,9 +76,7 @@ USER appuser
 # Создаем директорию для логов от имени appuser
 RUN mkdir -p /app/logs && chmod 755 /app/logs
 
-# Healthcheck
-HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
-    CMD python -c "import sys; sys.path.insert(0, '/app/src'); import requests; requests.get('http://localhost:8082/api/health', timeout=5)" || exit 1
+# (healthcheck removed to avoid periodic ProxyAPI calls)
 
 # Экспонируем порт
 EXPOSE 8082
